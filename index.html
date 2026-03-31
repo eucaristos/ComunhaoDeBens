@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comunhão de Bens Eucaristós</title>
+  <meta name="description" content="Formulário de Comunhão de Bens Eucaristós." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/x-icon" href="images/lg.jpg" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --card: #f7f3ee;
+      --text: #1d1610;
+      --text-soft: #6e5d4d;
+      --line: rgba(123, 82, 42, 0.18);
+      --accent: #d17a2a;
+      --accent-hover: #ba6920;
+      --accent-soft: #f2dbc2;
+      --shadow: 0 20px 60px rgba(0,0,0,.28);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --container: 1180px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Work Sans', system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(209,122,42,.12), transparent 28%),
+        linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
+      color: #f5efe8;
+      /* Evita flash de conteúdo sem estilo em Safari */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Skip link acessibilidade */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 0 0 8px 8px;
+      font-weight: 600;
+      z-index: 9999;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 0; }
+
+    .page {
+      width: min(calc(100% - 32px), var(--container));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .intro,
+    .form-shell {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .intro {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      min-height: 760px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* isolation não suportado em Safari antigo — fallback via z-index */
+    @supports not (isolation: isolate) {
+      .intro { z-index: 0; }
+    }
+
+    .intro::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 20%, rgba(255,177,80,.28), transparent 18%),
+        radial-gradient(circle at 30% 80%, rgba(209,122,42,.16), transparent 22%),
+        linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.35));
+      z-index: -1;
+    }
+
+    .intro-top { padding: 32px 32px 16px; }
+
+    .eyebrow {
+      display: -webkit-inline-flex;
+      display: inline-flex;
+      -webkit-align-items: center;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      color: #f2ddca;
+      font-size: 13px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .intro h1 {
+      margin: 20px 0 16px;
+      font-size: clamp(2.3rem, 5vw, 4.5rem);
+      line-height: .96;
+      letter-spacing: -.05em;
+      max-width: 10ch;
+    }
+
+    .intro p {
+      margin: 0;
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.7;
+      color: rgba(245,239,232,.84);
+      max-width: 46ch;
+    }
+
+    .intro-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .intro-points div {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      gap: 12px;
+      color: rgba(245,239,232,.88);
+      font-size: .98rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #efb15e, var(--accent));
+      box-shadow: 0 0 0 6px rgba(209,122,42,.16);
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+
+    /* ── ÁREA DO GIF ── */
+    .art {
+      margin: 0 18px 18px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 32%, rgba(255,196,97,.28), transparent 12%),
+        radial-gradient(circle at 70% 70%, rgba(209,122,42,.22), transparent 18%),
+        linear-gradient(180deg, #40220d 0%, #22150c 58%, #18110d 100%);
+      position: relative;
+      border: 1px solid rgba(255,255,255,.06);
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-height: 360px;
+    }
+
+    #gif-container {
+      position: relative;
+      width: 100%;
+      height: -webkit-fill-available;
+      cursor: pointer;
+    }
+
+    #gif-animado {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .play-btn {
+      position: absolute;
+      inset: 0;
+      /* fallback para navegadores sem suporte a inset */
+      top: 0; right: 0; bottom: 0; left: 0;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      cursor: pointer;
+      background: rgba(0,0,0,.28);
+      border-radius: 16px;
+    }
+
+    .play-btn-inner {
+      width: 52px;
+      height: 52px;
+      background: rgba(209,122,42,.88);
+      border-radius: 50%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,.45);
+      -webkit-transition: -webkit-transform .15s, background .15s;
+      transition: transform .15s, background .15s;
+    }
+
+    .play-btn:hover .play-btn-inner {
+      -webkit-transform: scale(1.08);
+      transform: scale(1.08);
+      background: rgba(186,105,32,.95);
+    }
+
+    /* Estado ativo para touch (mobile) */
+    .play-btn:active .play-btn-inner {
+      -webkit-transform: scale(.96);
+      transform: scale(.96);
+    }
+
+    .form-shell {
+      background: var(--card);
+      padding: 18px;
+      min-height: 760px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+
+    .form-frame {
+      -webkit-flex: 1;
+      flex: 1;
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 32px 30px 28px;
+      position: relative;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .form-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      top: 0; right: 0; bottom: 0; left: 0;
+      border: 1px solid rgba(123,82,42,.08);
+      border-radius: var(--radius-lg);
+      pointer-events: none;
+    }
+
+    .form-title {
+      font-size: 1.5rem;
+      line-height: 1.15;
+      color: var(--text);
+      margin: 0 0 8px;
+      letter-spacing: -.03em;
+    }
+
+    .form-subtitle {
+      color: var(--text-soft);
+      margin: 0 0 24px;
+      line-height: 1.6;
+      font-size: .97rem;
+    }
+
+    form { display: grid; gap: 16px; }
+
+    .field { display: grid; gap: 7px; }
+
+    label {
+      color: var(--text);
+      font-weight: 600;
+      font-size: .97rem;
+    }
+
+    input {
+      width: 100%;
+      border: 1.5px solid var(--line);
+      background: #fdfaf7;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-transition: border-color .18s, box-shadow .18s;
+      transition: border-color .18s, box-shadow .18s;
+    }
+
+    input::-webkit-input-placeholder { color: #c4a88e; }
+    input::-moz-placeholder { color: #c4a88e; }
+    input:-ms-input-placeholder { color: #c4a88e; }
+    input::placeholder { color: #c4a88e; }
+
+    input:focus {
+      border-color: rgba(209,122,42,.6);
+      box-shadow: 0 0 0 4px rgba(209,122,42,.11);
+      background: #fff;
+    }
+
+    .actions {
+      display: -webkit-flex;
+      display: flex;
+      gap: 10px;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    button {
+      -webkit-appearance: none;
+      appearance: none;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-transition: -webkit-transform .14s, background .15s, opacity .15s;
+      transition: transform .14s, background .15s, opacity .15s;
+      /* Touch highlight removido no iOS */
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(209,122,42,.22);
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:active { -webkit-transform: translateY(1px); transform: translateY(1px); }
+    .btn-primary:disabled { opacity: .65; cursor: not-allowed; }
+
+    .btn-secondary {
+      background: #ede3d8;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover { background: #e4d6c7; }
+    .btn-secondary:active { -webkit-transform: translateY(1px); transform: translateY(1px); }
+
+    .help {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      gap: 16px;
+      -webkit-align-items: center;
+      align-items: center;
+      padding: 14px 6px 0;
+      color: var(--text-soft);
+      font-size: .9rem;
+    }
+
+    .help strong { color: var(--text); font-weight: 600; }
+
+    .badge {
+      display: -webkit-inline-flex;
+      display: inline-flex;
+      -webkit-align-items: center;
+      align-items: center;
+      gap: 7px;
+      background: var(--accent-soft);
+      color: #8a4f16;
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: .82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ── POPUP OVERLAY ── */
+    .popup-overlay {
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: rgba(10,8,5,.72);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      -webkit-transition: opacity .3s ease;
+      transition: opacity .3s ease;
+    }
+
+    .popup-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .popup-card {
+      background: linear-gradient(160deg, #2a1a0a 0%, #1c120a 100%);
+      border: 1px solid rgba(255,177,80,.22);
+      border-radius: 28px;
+      padding: 40px 36px 32px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow:
+        0 32px 80px rgba(0,0,0,.55),
+        inset 0 0 0 1px rgba(255,255,255,.04);
+      position: relative;
+      -webkit-transform: translateY(20px) scale(.97);
+      transform: translateY(20px) scale(.97);
+      -webkit-transition: -webkit-transform .35s cubic-bezier(0.16,1,0.3,1), opacity .3s ease;
+      transition: transform .35s cubic-bezier(0.16,1,0.3,1), opacity .3s ease;
+      opacity: 0;
+      /* Garante que o card fique acima do overlay no Safari */
+      -webkit-transform-style: preserve-3d;
+    }
+
+    .popup-overlay.visible .popup-card {
+      -webkit-transform: translateY(0) scale(1);
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .popup-glow {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(255,177,80,.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    .popup-icon {
+      font-size: 2.6rem;
+      text-align: center;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    /* Corrigido: duas declarações font-size conflitantes */
+    .popup-title {
+      font-size: .8rem;
+      font-weight: 700;
+      color: #efb15e;
+      text-align: center;
+      letter-spacing: .08em;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    .popup-message {
+      color: rgba(245,239,232,.92);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      text-align: center;
+      white-space: pre-line;
+      word-break: break-word;
+    }
+
+    .popup-divider {
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(209,122,42,.6), transparent);
+      margin: 22px auto;
+      border-radius: 999px;
+    }
+
+    .popup-btn {
+      display: block;
+      width: 100%;
+      margin-top: 24px;
+      background: var(--accent);
+      color: #fff;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 8px 22px rgba(209,122,42,.28);
+      -webkit-transition: background .15s, -webkit-transform .14s;
+      transition: background .15s, transform .14s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .popup-btn:hover { background: var(--accent-hover); }
+    .popup-btn:active { -webkit-transform: translateY(1px); transform: translateY(1px); }
+
+    .popup-error .popup-card {
+      background: linear-gradient(160deg, #2a0a0a 0%, #1c0a0a 100%);
+      border-color: rgba(180,60,48,.3);
+    }
+
+    .popup-error .popup-title { color: #e07060; }
+    .popup-error .popup-btn {
+      background: #a33830;
+      box-shadow: 0 8px 22px rgba(163,56,48,.28);
+    }
+    .popup-error .popup-btn:hover { background: #8a2e26; }
+    .popup-error .popup-glow {
+      background: radial-gradient(circle, rgba(180,60,48,.25), transparent 70%);
+    }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 980px) {
+      .page { padding-top: 16px; }
+      .hero { grid-template-columns: 1fr; }
+      .intro, .form-shell { min-height: auto; }
+      .art { min-height: 220px; }
+      .help { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(calc(100% - 16px), var(--container)); }
+      .intro-top { padding: 24px 22px 12px; }
+      .intro h1 { font-size: clamp(2rem, 10vw, 3rem); }
+      .form-shell { padding: 10px; }
+      .form-frame { padding: 22px 18px 20px; }
+      .art { margin: 0 10px 10px; }
+      .play-btn-inner { width: 44px; height: 44px; }
+      input, button { min-height: 48px; }
+      .popup-card { padding: 32px 22px 26px; }
+      .popup-message { font-size: .97rem; }
+    }
+
+    /* Respeita preferência de movimento reduzido */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        -webkit-animation-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        -webkit-transition-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#formulario">Ir para o formulário</a>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+  <div class="popup-card" id="popup-card">
+    <div class="popup-glow"></div>
+    <div class="popup-icon" id="popup-icon" aria-hidden="true">🙏🏽</div>
+    <div class="popup-title" id="popup-title">Comunhão de bens Eucaristós</div>
+    <div class="popup-divider" aria-hidden="true"></div>
+    <div class="popup-message" id="popup-message"></div>
+    <button class="popup-btn" id="popup-btn" type="button">Fechar</button>
+  </div>
+</div>
+
+<main class="page">
+  <section class="hero" aria-labelledby="titulo-formulario">
+
+    <article class="intro">
+      <div class="intro-top">
+        <div class="eyebrow" aria-hidden="true">Comunhão de Bens Eucaristós</div>
+        <h1 id="titulo-formulario">Instruções de uso</h1>
+        <p>
+          Preencha o formulário ao lado para registrar sua contribuição com clareza e segurança.
+          Os dados são enviados automaticamente para a planilha do Economato.
+        </p>
+        <div class="intro-points" aria-label="Informações do formulário">
+          <div><span class="dot" aria-hidden="true"></span>Informe nome e os valores de cada fundo.</div>
+          <div><span class="dot" aria-hidden="true"></span>Compatível com celular, tablet e desktop.</div>
+          <div><span class="dot" aria-hidden="true"></span>Qualquer dúvida, podem procurar o setor do Economato.</div>
+        </div>
+      </div>
+
+      <div class="art" aria-hidden="true">
+        <div id="gif-container">
+          <img
+            id="gif-animado"
+            src="images/tutorial.gif"
+            alt=""
+          />
+          <div class="play-btn" id="play-btn" role="button" tabindex="0" aria-label="Reproduzir tutorial em GIF">
+            <div class="play-btn-inner">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <section class="form-shell" aria-label="Formulário de contribuição">
+      <div class="form-frame" id="formulario">
+        <h2 class="form-title">Dados da contribuição</h2>
+        <p class="form-subtitle">
+          Informe os valores com números (ex.: <strong>R$ 150,00</strong>). Qualquer valor não preenchido será registrado como R$ 0,00.
+        </p>
+
+        <form id="form-contribuicao" novalidate>
+          <div class="field">
+            <label for="nome">Nome completo</label>
+            <input id="nome" name="nome" type="text"
+                   placeholder="Digite o nome completo" required autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="comunhao">Comunhão de Bens (R$)</label>
+            <input id="comunhao" name="comunhao" type="text"
+                   inputmode="decimal" placeholder="R$ 0,00" />
+          </div>
+
+          <div class="field">
+            <label for="feliz">Feliz Terceiro (R$)</label>
+            <input id="feliz" name="feliz" type="text"
+                   inputmode="decimal" placeholder="R$ 0,00" />
+          </div>
+
+          <div class="field">
+            <label for="fundo">Fundo da Providência (R$)</label>
+            <input id="fundo" name="fundo" type="text"
+                   inputmode="decimal" placeholder="R$ 0,00" />
+          </div>
+
+          <div class="field">
+            <label for="monte">Monte Santo (R$)</label>
+            <input id="monte" name="monte" type="text"
+                   inputmode="decimal" placeholder="R$ 0,00" />
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" type="submit" id="btn-enviar">Enviar</button>
+            <button class="btn-secondary" type="button" id="btn-limpar">Limpar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="help" aria-hidden="true"></div>
+    </section>
+
+  </section>
+</main>
+
+<script>
+  const WEBHOOK_URL = 'https://izzy.eucaristos.com.br/api/v1/webhooks/bvDPncAA17QdBejuYKcDD';
+
+  const MESES = [
+    'Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'
+  ];
+  const mesAtual = MESES[new Date().getMonth()];
+
+  const MENSAGENS_SUCESSO = [
+    'Tudo aquilo que temos é sinal do amor e da Providência Divina. Portanto, tudo pertence a Deus. Nós somos meros administradores dos seus bens 🙏🏽😇\n\nMuito obrigado pela sua Comunhão do mês de ' + mesAtual + ', pela sua gratidão e confiança, por acreditar que nada te faltará e que Deus sempre nos dará o necessário para vivermos.\n\nObrigado por ajudar a manter esta Obra 🥰🙏🏽',
+    '"A Comunhão de Bens é um vínculo de amor e uma abundante e permanente troca de bens espirituais e materiais, que a todos beneficia na busca pela Santidade"\n\nMuito obrigado pela sua fidelidade no mês de ' + mesAtual + '! Que Deus abençoe e retribua em dobro 🙏🏽☺️',
+    'Mais do que uma colaboração, a Comunhão de Bens é um gesto de amor, gratidão, fé, partilha, e, sobretudo, agradecimento a Deus, por tudo que ele nos dá.\n\nMuito obrigado pela sua contribuição no mês de ' + mesAtual + ', que Deus te abençoe 🙏🏽',
+    'A sua generosidade transborda na vida do próximo através da Comunhão de Bens e colabora com a construção e realização dos sonhos de Deus.\n\nObrigado pela sua devolução neste mês!',
+    'A Comunhão de Bens nos ajuda a reconhecer que tudo que recebemos vem de Deus e assim, em pura gratidão, partilhamos uma pequena parte do muito que recebemos.\n\nMuito obrigado pela sua fidelidade no mês de ' + mesAtual + ' 🙏🏽',
+    'A Comunhão de Bens é a devolução que fazemos a Deus de tudo que ele nos dá, com carinho e muito amor. É uma atitude do bom cristão, um gesto de generosidade e confiança naquele que tudo nos dá, sem nada merecermos.\n\nMuito obrigado pela sua contribuição no mês de ' + mesAtual + ' 🙏🏽',
+    'Deus fez por nós o que ninguém poderia fazer, e não existe a menor possibilidade de lhe pagarmos por esse favor imerecido. Podemos, entretanto, agradecer-lhe de todo o nosso coração, como: obedecendo à sua Palavra, aproximando-nos dele através da oração, evangelizando e contribuindo por meio da nossa Comunhão de Bens.\n\nMuito obrigado pela sua fidelidade no mês de ' + mesAtual + ' 🙏🏽',
+    'Muito obrigado pela sua Comunhão de Bens no mês de ' + mesAtual + ', pela sua atitude de fé na Divina Providência, que nos conduz e nos livra das preocupações, dos medos e insegurança, e nos dá a certeza que nada nos faltará 🙏🏽',
+    'Muito obrigado por sua fidelidade e compromisso com a Comunhão de Bens de ' + mesAtual + '.\n\nQuando uma mão é estendida, você pode achar que é apenas uma pequena ajuda, mas para Deus é uma grandiosa colaboração e fundamental para a manutenção desta obra que Deus nos confiou 🙏🏽',
+    'Muito obrigado pelo cuidado, carinho e fidelidade com a Comunidade no mês de ' + mesAtual + '.\n\nA sua oferta financeira, com certeza ajudará a formar muitos corações Eucarísticos. Que Deus te abençoe e lhe dê em dobro 🙏🏽',
+    'Obrigado por seu compromisso e bondade no mês de ' + mesAtual + '. Através da sua Comunhão de Bens, com certeza provamos da Divina Providência e do amor infinito de Deus 🙏🏽',
+    'Muito obrigado por sua Comunhão de Bens no mês de ' + mesAtual + ', por ajudar no sustento e na realização dos sonhos de Deus através dessa obra 🙏🏽\n\nQue Deus te abençoe',
+    '"Cada um dê conforme determinou em seu coração, não com pesar ou por obrigação, pois Deus ama quem dá com alegria."\n2 Coríntios 9:7-9\n\nMuito obrigado pela sua Comunhão de Bens no mês de ' + mesAtual + ' 🙏🏽',
+    'A Comunhão de Bens é uma via para semear o amor de Deus em seu coração e no coração dos irmãos. Através dela podemos provar da Divina Providência.\n\nMuito obrigado pela sua oferta no mês de ' + mesAtual + '. Que Deus te abençoe e não te deixe faltar nada 🙏🏽',
+    '"Tragam o dízimo todo ao depósito do templo, para que haja alimento em minha casa. Ponham-me à prova, diz o Senhor dos Exércitos, e vejam se não vou abrir as comportas dos céus e derramar sobre vocês tantas bênçãos que nem terão onde guardá-las."\nMalaquias 3:10\n\nMuito obrigado pela sua oferta no mês de ' + mesAtual + ', que Deus nunca te deixe faltar nada 🙏🏽'
+  ];
+
+  /* ── Popup ── */
+  let overlay   = document.getElementById('popup');
+  let popupIcon = document.getElementById('popup-icon');
+  let popupMsg  = document.getElementById('popup-message');
+  let popupBtn  = document.getElementById('popup-btn');
+
+  function abrirPopup(tipo, texto) {
+    overlay.classList.toggle('popup-error', tipo === 'error');
+    popupIcon.textContent = tipo === 'error' ? '⚠️' : '🙏🏽';
+    popupMsg.textContent  = texto;
+    overlay.classList.add('visible');
+    // Foca no botão para acessibilidade
+    setTimeout(function() { popupBtn.focus(); }, 50);
+  }
+
+  function fecharPopup() {
+    overlay.classList.remove('visible');
+  }
+
+  popupBtn.addEventListener('click', fecharPopup);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) fecharPopup(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') fecharPopup(); });
+
+  /* ── Máscara BRL ── */
+  const camposValor = ['comunhao', 'feliz', 'fundo', 'monte'];
+
+  function aplicarMascara(input) {
+    // Filtra teclas — versão compatível com todos os navegadores
+    input.addEventListener('keydown', function(e) {
+      const permite = [
+        'Backspace','Delete','Tab','Escape','Enter',
+        'ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'
+      ];
+      if (permite.indexOf(e.key) !== -1) return;
+      if (e.ctrlKey || e.metaKey) return; // permite Ctrl+A, Cmd+C etc.
+      if (!/^\d$/.test(e.key)) e.preventDefault();
+    });
+
+    input.addEventListener('input', function() {
+      const apenasDigitos = input.value.replace(/\D/g, '');
+      if (!apenasDigitos) { input.value = ''; return; }
+      const reais = parseInt(apenasDigitos, 10) / 100;
+      input.value = reais.toLocaleString('pt-BR', {
+        style: 'currency', currency: 'BRL', minimumFractionDigits: 2
+      });
+    });
+  }
+
+  camposValor.forEach(function(id) { aplicarMascara(document.getElementById(id)); });
+
+  document.getElementById('btn-limpar').addEventListener('click', function() {
+    camposValor.forEach(function(id) { document.getElementById(id).value = ''; });
+    document.getElementById('nome').value = '';
+    document.getElementById('nome').focus();
+  });
+
+  /* ── Parse BRL → número ── */
+  function parseBRL(str) {
+    if (!str) return 0.00;
+    const s = str.replace(/[R$\s.]/g, '').replace(',', '.');
+    const n = parseFloat(s);
+    return isFinite(n) ? n : 0.00;
+  }
+
+  /* ── Envio ── */
+  const form      = document.getElementById('form-contribuicao');
+  let btnEnviar = document.getElementById('btn-enviar');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    btnEnviar.disabled = true;
+    btnEnviar.textContent = 'Enviando…';
+
+    const nome = document.getElementById('nome').value.trim();
+
+    if (!nome) {
+      abrirPopup('error', 'Por favor, informe o nome completo antes de enviar.');
+      btnEnviar.disabled = false;
+      btnEnviar.textContent = 'Enviar';
+      return;
+    }
+
+    const agora = new Date();
+    let payload = {
+      data: agora.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+      nome:     nome,
+      comunhao: parseBRL(document.getElementById('comunhao').value),
+      feliz:    parseBRL(document.getElementById('feliz').value),
+      fundo:    parseBRL(document.getElementById('fundo').value),
+      monte:    parseBRL(document.getElementById('monte').value)
+    };
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function() {
+      const idx = Math.floor(Math.random() * MENSAGENS_SUCESSO.length);
+      abrirPopup('success', MENSAGENS_SUCESSO[idx]);
+      camposValor.forEach(function(id) { document.getElementById(id).value = ''; });
+      document.getElementById('nome').value = '';
+    })
+    .catch(function() {
+      abrirPopup('error', 'Não foi possível enviar agora. Verifique sua conexão e tente novamente.');
+    })
+    .finally(function() {
+      btnEnviar.disabled = false;
+      btnEnviar.textContent = 'Enviar';
+    });
+  });
+
+  /* ── Controle do GIF ── */
+  let gifAnimado = document.getElementById('gif-animado');
+  let playBtn    = document.getElementById('play-btn');
+  let gifSrcBase = gifAnimado.src.split('?')[0];
+
+  // Estado inicial
+  gifAnimado.style.display = 'none';
+  playBtn.style.display    = 'flex';
+
+  function iniciarGif() {
+    gifAnimado.src = gifSrcBase + '?t=' + Date.now();
+    gifAnimado.style.display = 'block';
+    playBtn.style.display    = 'none';
+  }
+
+  function pararGif() {
+    gifAnimado.style.display = 'none';
+    playBtn.style.display    = 'flex';
+  }
+
+  playBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    iniciarGif();
+  });
+
+  // Suporte a teclado no play-btn (role="button")
+  playBtn.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      iniciarGif();
+    }
+  });
+
+  gifAnimado.addEventListener('click', function(e) {
+    e.stopPropagation();
+    pararGif();
+  });
+</script>
+
+</body>
+</html>
